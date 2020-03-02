@@ -1,0 +1,22 @@
+﻿@page
+@using Microsoft.AspNetCore.Components.Web
+@using JammedComputers.Components
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Welcome, To JammedComputers</h2>
+    <br />
+    <br />
+    <p>Subscribe to Our <a href="https://www.youtube.com/channel/UCq8JMyCrilEjrywZVKgHh3Q" target="_blank" >Youtube Channel</a> To see these ideas into action!.</p>
+    <br />
+    <br />
+</div>
+
+
+
+@(await Html.RenderComponentAsync<Components.Component>(RenderMode.ServerPrerendered))
+
+<script src="_framework/blazor.server.js"></script>

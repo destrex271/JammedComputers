@@ -1,0 +1,72 @@
+﻿
+@using  JammedComputers.Models
+@using JammedComputers.Services;
+@using Microsoft.AspNetCore.Components.Web
+@inject Getter GetterS
+
+@if (GetterS.GetBlogs().Count() > 0)
+{
+
+    <div class="card-columns">
+        @foreach (var blg in GetterS.GetBlogs())
+        {
+        <div class="card">
+            <div class="card-body">
+                <h5 style="color:black;">@blg.Title</h5>
+                <br />
+                <h6 class="card-text">by @blg.Author</h6>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-dark" @onclick="(e => SelectBlog(blg.ID))" data-toggle="modal" data-target="#blogModal">Read Blog..</button>
+            </div>
+        </div>
+        }
+    </div>
+}
+<br />
+<br />
+<br />
+<p class="text-primary text-center">More Ideas Coming up stay tuned.....</p>
+@if (selectedBlog != null)
+{
+    <div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="blogTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="blogTitle">@selectedBlog.Title</h5>
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="text-muted">by - @selectedBlog.Author Published on @selectedBlog.Date.ToString().Substring(0, selectedBlog.Date.ToString().IndexOf(" "))</p>
+                            <p class="card-text">@selectedBlog.Text</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @if (selectedBlog.Link != "noLink")
+                    {
+                        <a href="@selectedBlog.Link" target="_blank" >Check Out the Youtube Video!</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+ }
+@code {
+
+    Blog selectedBlog;
+   
+
+    void SelectBlog(int blgId)
+    {
+        selectedBlog = GetterS.GetBlogs().First(x => x.ID == blgId);
+    }
+
+   
+
+}
